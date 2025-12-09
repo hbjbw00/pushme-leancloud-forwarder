@@ -1,0 +1,27 @@
+app = "pushme-fly-forwarder"  # 你的应用名，全局需唯一
+
+kill_signal = "SIGINT"
+kill_timeout = 5
+
+[build]
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_start_machines = true
+  auto_stop_machines = true
+  min_machines_running = 0
+
+  [[http_service.ports]]
+    port = 80
+    handlers = ["http"]
+  [[http_service.ports]]
+    port = 443
+    handlers = ["tls", "http"]
+
+  # 为了可能更好的连通性，可以尝试部署到离中国较近的区域（如新加坡）
+  # 在 flyctl launch 或 fly regions set 命令中设置
+  # primary_region = "sin" # sin 代表新加坡
+
+[env]
+  PORT = "8080"
