@@ -1,0 +1,4 @@
+# cloud.yml
+run:
+  command: node index.js
+  port: 3000
