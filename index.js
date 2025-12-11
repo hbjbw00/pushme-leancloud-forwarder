@@ -99,7 +99,20 @@ app.post('/forward', async (req, res) => {
   }
 });
 
+// 在你的 index.js 中，添加以下路由（放在 app.listen 之前）
+app.get('/', (req, res) => {
+  res.json({ status: 'ok', message: 'PushMe Forwarder is running on LeanCloud' });
+});
+
+// 原有的健康检查接口保持不变
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', service: 'PushMe Forwarder on LeanCloud', time: new Date().toISOString() });
+});
+
+// 然后才是 app.listen(...)
+
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`✅ 家庭中转服务已启动: http://0.0.0.0:${PORT}`);
   console.log(`健康检查地址: http://localhost:${PORT}/health`);
+
 });
